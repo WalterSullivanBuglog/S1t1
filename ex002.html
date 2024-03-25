@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>010101</title>
+
+    <style>
+        body {
+            background-color: rgb(41, 47, 124);
+            color: rgb(211, 208, 204);
+            font: normal 10pt arial;
+        }
+
+        h1 {
+            color: yellowgreen;
+            font: normal 25pt arial;
+        }
+
+        p {
+            color: rgb(211, 208, 204);
+            font: normal 10pt arial;
+        }
+
+        div#area {
+            font: normal 12px arial;
+            background-color: yellowgreen;
+            color: rgb(15, 31, 31);
+            height: 50px;
+            width: 50px;
+            line-height: 50px;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        div#teladojogo {
+            background-color: black;
+            align-self: center;
+            width: 800px;
+            margin-left: 250px;
+            margin-top: 100px;
+        }
+
+        p#res {
+            margin-top: 10px;
+        }
+
+        input#num1 {
+            width: 50px;
+        }
+
+        input#num2 {
+            width: 50px;
+        }
+
+        input#A {
+            width: auto;
+            height: auto;
+        }
+
+        input#B {
+            width: auto;
+            height: auto;
+        }
+
+        input#C {
+            width: auto;
+            height: auto;
+        }
+
+        input#D {
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bem Vindo</h1>
+    <p>Diga seu nome abaixo:</p> <!-- p0 -->
+    <input type="text" name="t1r" id="t1r">
+    <input type="button" value="Confirmar" onclick="recebeunome()" id="confirm1">
+
+    <div id="area">
+        interaja
+    </div>
+
+    <p>Você pode somar numeros abaixo:</p> <!--p1-->
+
+    <input type="number" name="num1" id="num1">
+    <input type="number" name="num2" id="num2">
+    <input type="button" value="Somar" onclick="somar()" id="bsoma">
+
+    <p id="res">
+        resultado
+    </p> <!--p2-->
+
+    <p>Que tal se jogarmos um jogo?</p> <!--p3-->
+    <input type="button" value="Sim" id="bsim" onclick="csim()">
+    <input type="button" value="Não" id="bnao" onclick="cnao()">
+    <!--p4-->
+    <div id="teladojogo">
+    <p>Você acorda machucado, no meio de uma selva densa. Você não sabe como parou aqui, e muito menos os perigos e
+        desafios que terá que lidar. <br> O que fará agora?<br> <br>A) Nada<br>B) Verificar ferimentos<br>C) verificar
+        os arredores<br>D) Olhar para o ceu</p>
+    <input type="button" value="A" id="A" onclick="Achoose()">
+    <input type="button" value="B" id="B" onclick="Bchoose()">
+    <input type="button" value="C" id="C" onclick="Cchoose()">
+    <input type="button" value="D" id="D" onclick="Dchoose()">
+    <input type="button" value="voltar" id="voltar" onclick="voltarchoose()">
+    </div>
+
+    <script>
+
+        var nome = window.document.getElementById('t1r')
+        var paragrafo1 = window.document.getElementsByTagName('p')[1]
+        var paragrafo2 = window.document.getElementsByTagName('p')[2]
+        var paragrafo3 = window.document.getElementsByTagName('p')[3]
+        var paragrafo4 = window.document.getElementsByTagName('p')[4]
+        var buttonsim = window.document.getElementById('bsim')
+        var buttonnao = window.document.getElementById('bnao')
+        var buttonA = window.document.getElementById('A')
+        var buttonB = window.document.getElementById('B')
+        var buttonC = window.document.getElementById('C')
+        var buttonD = window.document.getElementById('D')
+        var buttonvoltar = window.document.getElementById('voltar')
+        var cena = 0
+        var quest1 = 0
+        var quest2 = '0'
+        var voltarpara = '0'
+        voltar.style.display = 'none'
+        num1.style.display = 'none'
+        num2.style.display = 'none'
+        bsoma.style.display = 'none'
+        paragrafo1.style.display = 'none'
+        paragrafo2.style.display = 'none'
+        paragrafo3.style.display = 'none'
+        paragrafo4.style.display = 'none'
+        area.style.display = 'none'
+        buttonsim.style.display = 'none'
+        buttonnao.style.display = 'none'
+        buttonD.style.display = 'none'
+        buttonC.style.display = 'none'
+        buttonB.style.display = 'none'
+        buttonA.style.display = 'none'
+
+
+        //Atribui o valor da div area a variavel mouseaction e monitora ações do mouse dentro dessa div.
+
+        var mouseaction = window.document.getElementById('area')
+        mouseaction.addEventListener('mousedown', clique)
+        mouseaction.addEventListener('mouseup', cliqueup)
+        mouseaction.addEventListener('mouseenter', entmouse)
+        mouseaction.addEventListener('mouseleave', cliquedrop)
+
+        //Atribui o valor das inputs em suas respectivas variaveis, altera titulo e paragrafo com os valores das inputs e desabilita as mesmas.
+
+        function recebeunome() {
+            var confirmbutton1 = window.document.getElementById('confirm1')
+            var texto1 = window.document.getElementsByTagName('p')[0]
+            var titulo = window.document.getElementsByTagName('h1')[0]
+            var nome1 = String(nome.value)
+            texto1.innerHTML = `Olá ${nome1}, essa é uma pagina de teste para minhas aulas de javascript`
+            titulo.innerHTML = `Bem Vindo, ${nome1}`
+            nome.style.display = 'none'
+            confirmbutton1.style.display = 'none'
+            paragrafo3.style.display = 'block'
+            buttonsim.style.display = 'inline-block'
+            buttonnao.style.display = 'inline-block'
+        }
+
+        function somar() {
+            var txtn1 = window.document.getElementById('num1')
+            var txtn2 = window.document.getElementById('num2')
+            var res = window.document.getElementById('res')
+            var n1 = Number(txtn1.value)
+            var n2 = Number(txtn2.value)
+            var som = n1 + n2
+            res.innerHTML = `O resultado da soma ente ${n1} e ${n2} é ${som}.`
+        }
+
+        function clique() {
+            mouseaction.innerText = "click..."
+        }
+
+        function cliquedrop() {
+            mouseaction.innerText = "intereja"
+        }
+
+        function entmouse() {
+            mouseaction.innerText = "loading"
+        }
+
+        function cliqueup() {
+            mouseaction.innerText = "click"
+        }
+
+        function csim() {
+            paragrafo3.style.display = 'none'
+            buttonsim.style.display = 'none'
+            buttonnao.style.display = 'none'
+            paragrafo4.style.display = 'block'
+            buttonD.style.display = 'inline-block'
+            buttonC.style.display = 'inline-block'
+            buttonB.style.display = 'inline-block'
+            buttonA.style.display = 'inline-block'
+
+        }
+
+        function cnao() {
+            paragrafo3.style.display = 'none'
+            buttonsim.style.display = 'none'
+            buttonnao.style.display = 'none'
+            num1.style.display = 'inline-block'
+            num2.style.display = 'inline-block'
+            bsoma.style.display = 'inline-block'
+            paragrafo1.style.display = 'block'
+            paragrafo2.style.display = 'block'
+        }
+
+        //botões de escolhas que o jogador pode fazer.
+        function Achoose() {
+            quest1 = 1
+            cena += 1
+            questline()
+        }
+
+        function Bchoose() {
+            quest1 = 2
+            cena += 1
+            questline()
+        }
+
+        function Cchoose() {
+            quest1 = 3
+            cena += 1
+            questline()
+        }
+
+        function Dchoose() {
+            quest1 = 4
+            cena += 1
+            questline()
+        }
+
+        //funções do botao voltar usado em momentos especificos em que o jogador faz uma ação que só ha a opção de voltar.
+        function voltarchoose() {
+            if (voltarpara == 'a') {
+                quest1 = 0
+                cena = 0
+                buttonvoltar.style.display = 'none'
+                buttonD.style.display = 'inline-block'
+                buttonC.style.display = 'inline-block'
+                buttonB.style.display = 'inline-block'
+                buttonA.style.display = 'inline-block'
+                questline()
+            } else if (voltarpara == 'b') {
+                quest1 = 2
+                cena = 1
+                buttonvoltar.style.display = 'none'
+                buttonD.style.display = 'inline-block'
+                buttonC.style.display = 'inline-block'
+                buttonB.style.display = 'inline-block'
+                buttonA.style.display = 'inline-block'
+                questline()
+            } else if (voltarpara == 'c') {
+                quest1 = 3
+                cena = 2
+                quest2 = 'b'
+                buttonvoltar.style.display = 'none'
+                buttonD.style.display = 'inline-block'
+                buttonC.style.display = 'inline-block'
+                buttonB.style.display = 'inline-block'
+                buttonA.style.display = 'inline-block'
+                questline()
+            } else if (voltarpara == 'd') {
+                quest1 = 1
+                cena = 1
+                buttonvoltar.style.display = 'none'
+                buttonD.style.display = 'inline-block'
+                buttonC.style.display = 'inline-block'
+                buttonB.style.display = 'inline-block'
+                buttonA.style.display = 'inline-block'
+                questline()
+            } else if (voltarpara == 'e') {
+                quest1 = 1
+                cena = 3
+                quest2 = 'c'
+                buttonvoltar.style.display = 'none'
+                buttonD.style.display = 'inline-block'
+                buttonC.style.display = 'inline-block'
+                buttonB.style.display = 'inline-block'
+                buttonA.style.display = 'inline-block'
+                questline()
+            }
+        }
+
+        //Todas as opções  que o jogador pode selecionar.
+        function questline() {
+
+            var nome1 = String(nome.value)
+
+            if (quest1 == 0 && cena == 0) {
+                paragrafo4.innerHTML = 'Você acorda machucado, no meio de uma selva densa. Você não sabe como parou aqui, e muito menos os perigos e desafios que terá que lidar. <br> O que fará agora?<br> <br>A) Nada<br>B) Verificar ferimentos<br>C) verificar os arredores<br>D) Olhar para o ceu'
+            }
+
+            if (quest1 == 1 && cena == 1) {
+                paragrafo4.innerHTML = `${nome1}, você morreu`
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            } else if (quest1 == 2 && cena == 1) {
+                paragrafo4.innerHTML = `Você identifica um sangramento moderado em sua perna. <br> O que vai fazer?<br><br>A) Nada<br>B) Fazer um torniquete com a camisa<br>C) Tentar estancar o sangramento pressionando com a mão<br>D) Tentar calterizar com sua faca`
+                quest2 = 'b'
+            } else if (quest1 == 3 && cena == 1) {
+                paragrafo4.innerHTML = 'Após dar poucos passos você sente uma dor insuportavel. "talvez seja melhor verificar meus ferimentos " você pensa.<br> O que fará agora?<br> <br>A) Nada<br>B) Verificar ferimentos<br>C) verificar os arredores<br>D) Olhar para o ceu'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+                buttonvoltar.style.display = 'block'
+                voltarpara = 'a'
+            } else if (quest1 == 4 && cena == 1) {
+                paragrafo4.innerHTML = `Sua visão pouco a pouco começa a ficar embassada e escura, até um momento em que nada mais pode ser visto. O silencio ao seu redor se torna cada vez mais forte, ate que você consegue enteder. ${nome1}, você morreu`
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            }
+
+            if (quest1 == 1 && cena == 2 && quest2 == 'b') {
+                paragrafo4.innerHTML = `${nome1}, você morreu`
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            } else if (quest1 == 2 && cena == 2 && quest2 == 'b') {
+                paragrafo4.innerHTML = `Apesar da dor, voce sente que isso irá te ajudar a não morrer, por enquanto. <br> O que vai fazer?<br><br>A) Olhar ao redor<br>B) Catucar o ferimento<br>C) Dormir<br>D) Nada`
+                quest2 = 'c'
+            } else if (quest1 == 3 && cena == 2 && quest2 == 'b') {
+                paragrafo4.innerHTML = 'Parece que funcionou, porem você perdeu muito sangue.<br> O que vai fazer?<br><br>A) Nada<br>B) Vasculhar os arredores<br>C) Tentar fazer curativos com sua camisa<br>D) Dormir'
+                quest2 = 'd'
+            } else if (quest1 == 4 && cena == 2 && quest2 == 'b') {
+                paragrafo4.innerHTML = 'Não há fogo por perto no momento.'
+                voltarpara = 'b'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+                buttonvoltar.style.display = 'block'
+            }
+
+            if (quest1 == 1 && cena == 3 && quest2 == 'c') {
+                paragrafo4.innerHTML = `Você encontra algumas toras de madeira, palha, um smartphone, 1M de reais. <br> O que vai fazer?<br><br>A) Fazer uma fogueira<br>B) fazer um sinal de SOS com as toras<br>C) Usar o smartphone<br>D) Agarrar o dinheiro e usar o mesmo para sair dessa situação`
+                quest2 = 'e'
+            } else if (quest1 == 2 && cena == 3 && quest2 == 'c') {
+                paragrafo4.innerHTML = 'Você sente uma dor escruciante, e tem a certeza de que não poderar andar mais.'
+                voltarpara = 'd'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+                buttonvoltar.style.display = 'block'
+            } else if (quest1 == 3 && cena == 3 && quest2 == 'c') {
+                paragrafo4.innerHTML = 'ao longe você vê um helicoptero se afastando de onde você está. No fundo você sente que ele era sua ultima esperança de voltar para casa.'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            } else if (quest1 == 4 && cena == 3 && quest2 == 'c') {
+                paragrafo4.innerHTML = 'Um som de helicoptero se aproxima, você consegue ver o mesmo, acena, grita, mas o piloto não foi capaz de te ver. No fundo você sente que ele era sua ultima esperança de voltar para casa.'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            }
+
+            if (quest1 == 1 && cena == 4 && quest2 == 'e') {
+                paragrafo4.innerHTML = 'A fogueira produz uma quantidade de fumaça tão grande que você quase morre axficiado, mas graças a ela um helicoptero consegue te encontrar. Você está salvo.'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            } else if (quest1 == 2 && cena == 4 && quest2 == 'e') {
+                paragrafo4.innerHTML = 'Você gasta muita energia, mas quando você coloca a ultima madeira você tem certeza que valeu a pena. Um helicoptero se aproxima e o piloto vê seu sinal. Você está salvo.'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            } else if (quest1 == 3 && cena == 4 && quest2 == 'e') {
+                paragrafo4.innerHTML = 'Não há sinal aqui.'
+                voltarpara = 'e'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+                buttonvoltar.style.display = 'block'
+            } else if (quest1 == 4 && cena == 4 && quest2 == 'e') {
+                paragrafo4.innerHTML = 'O dinheiro salva sua vida mais uma vez, atravez dele você compra um iate, e lindas garotas te servem bebidas enquanto você vê o seu destino chegar cada vez mais perto. Ali a poucos quilomentros está sua casa. Você morre abraçado com o dinheiro enquanto ri histericamente em meio a sua loucura.'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+            }
+
+            if (quest1 == 1 && cena == 3 && quest2 == 'd') {
+                quest1 = 1
+                cena = 1
+                questline()
+            } else if (quest1 == 2 && cena == 3 && quest2 == 'd') {
+                paragrafo4.innerHTML = 'Você está sentindo muita dor para fazer isso agora.'
+                voltarpara = 'c'
+                buttonD.style.display = 'none'
+                buttonC.style.display = 'none'
+                buttonB.style.display = 'none'
+                buttonA.style.display = 'none'
+                buttonvoltar.style.display = 'block'
+            } else if (quest1 == 3 && cena == 3 && quest2 == 'd') {
+                quest1 = 2
+                cena = 2
+                quest2 = 'b'
+                questline()
+            } else if (quest1 == 4 && cena == 3 && quest2 == 'd') {
+                quest1 = 1
+                cena = 1
+                questline()
+            }
+        }
+
+    </script>
+</body>
+
+</html>
